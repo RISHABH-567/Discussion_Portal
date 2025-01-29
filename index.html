@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1 class="heading">Discussion portal</h1>
+    </header>
+
+    <div class="container"> 
+        <!-- Left Side-->
+        <div class="left">
+            <div class="btn">
+                <button><b>New Question form</b></button>
+                <input type="text" placeholder="Search questions...">
+            </div>
+            <div class="ans">
+                
+            </div>
+        </div>
+
+        <!-- Right Side -->
+        <div class="right">
+            <div class="content"> 
+                <h1>Welcome to Discussion portal !</h1>
+                <p>Enter a subject and question to get started</p>
+                <input type="text" placeholder="Subject">
+                <br>
+                <textarea rows="5" cols="23" placeholder="Question"></textarea>
+                <br>
+                <button>Submit</button>
+            </div>
+            <div class="response">
+                <h4>Questions</h4>
+            
+                <div class="question"></div>
+                <button>Resolve</button>
+                <h4>Response</h4>
+                <div class="respond"></div>
+                <h3>Add Response</h3>
+                <input type="text" placeholder="Enter Name">
+                <br>
+                <textarea placeholder="Enter Comment"></textarea>
+                <br>
+                <button>Submit</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Josefin Sans";
+}
+
+.heading{
+    background-color: rgb(3, 101, 104);
+    height: 6vh;
+    color: white;
+    font-size: 2em;
+    padding: 1vmin;
+    text-align: center;
+    width: 100vw;
+}
+.container{
+    display: flex;
+}
+
+/* left side */
+
+.left{
+    width: 50vw;
+    background-color: whitesmoke;
+    height: 92vh;
+    border: 2px solid rgb(203, 193, 193);
+}
+
+.btn{
+    display: flex;
+    height: 12vmin;
+    background-color: white;
+}
+
+.btn button{
+    height: 4.5vmin;
+    width: 20vmin;
+    background-color: rgb(94, 94, 255);
+    color: white;
+    margin: 4vmin 2vmin 0 5vmin;
+    font-size: 0.8em;
+}
+
+.btn input{
+    width: 25vmin;
+    height: 4vmin;
+    margin: 4vmin 0 0 1vmin;
+    padding-left: 2vmin;
+}
+
+.ans div{
+     padding: 1em;
+     border: 1px solid rgb(203, 193, 193);
+     height: 3em;
+}
+
+
+
+
+/* right side */
+
+
+.right{
+    width: 50vw;
+    background-color: white;
+    height: 92vh;
+}
+.content{
+    padding: 10vmin;
+    
+}
+.right h1{
+    font-size: 2em;
+    margin-bottom: 0.2em;
+    
+}
+
+.right p{
+    margin-bottom: 1em;
+}
+
+
+
+.right input{
+    width: 10em;
+    height: 2.4em;
+    margin-bottom: 2em;
+    padding-left: 1em;
+    font-weight: bold;
+}
+
+.right textarea{
+    padding: 1em;
+    margin-bottom: 2em;
+    font-size:large;
+    width: 35em;
+}
+
+
+.right button{
+    width: 5em;
+    height: 2.5em;
+    background-color: rgb(94, 94, 255);
+    color: white;
+    align-self: flex-end;
+    margin-left: 40em;
+}
+
+
+
+.response{
+    padding: 5vmin 8vmin;
+    display: none;
+}
+
+.response h4{
+    color: gray;
+    margin-bottom: 1em;
+}
+
+
+
+.response button{
+    margin: 1em 0em;
+    margin-left: 40em;
+}
+
+.response h4:nth-of-type(2){
+    margin: 2em 0em;
+}
+
+.response h3{
+    color: gray;
+}
+
+.response input{
+    margin-bottom: 0.1em;
+    margin-top: 1em;
+}
+
+.response textarea{
+    height: 4em;
+    margin-bottom: 1em;
+    width: 35em;
+}
+
+.question{
+    background-color: whitesmoke;
+    padding: 1em 0em 1em 2em;
+    width: 35em;
+}
+
+.respond{
+    background-color: whitesmoke;
+    padding: 1em 0em 0em 2em;
+    width: 35em;
+    margin-bottom: 1em;
+}
+
+#like{
+    margin: 0 1px 2px 0;
+}
+#dislike{
+    margin: 0 0 1em 0;
+}
+
+
+.highlight{
+    background-color: yellow;
+    color: red;
+}
