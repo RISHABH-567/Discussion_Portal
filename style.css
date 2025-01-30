@@ -24,6 +24,8 @@
     background-color: whitesmoke;
     height: 92vh;
     border: 2px solid rgb(203, 193, 193);
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .btn{
@@ -52,6 +54,14 @@
      padding: 1em;
      border: 1px solid rgb(203, 193, 193);
      height: 3em;
+}
+
+.ans p:nth-of-type(1){
+    display: inline-block;
+    width: 35em;
+}
+.ans p:nth-of-type(2){
+    display: inline-block;
 }
 
 

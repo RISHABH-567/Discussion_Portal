@@ -1,25 +1,25 @@
 let subject = document.querySelectorAll("input")[1];
 let text = document.querySelector("textarea");
-const btn = document.querySelectorAll("button")[1];  //submit
-const area = document.querySelector(".ans");
-const btn2 = document.querySelector("button");     //question
+const submit = document.querySelectorAll("button")[1];  //submit
+const Left_container = document.querySelector(".ans");
+const Question = document.querySelector("button");     //question
 const response = document.querySelector(".response");
 const content = document.querySelector(".content");
-const question = document.querySelector(".question");
-const btn3 = document.querySelectorAll("button")[2];     //resolve
+const Response_Question = document.querySelector(".question");
+const Resolve = document.querySelectorAll("button")[2];     //resolve
 let mainobj = JSON.parse(localStorage.getItem("key")) || {};
-const btn4 = document.querySelectorAll("button")[3];  //submit 2
+const Response_Submit = document.querySelectorAll("button")[3];  //Submit 2
 let subject2 = document.querySelectorAll("input")[2];
-let text2 = document.querySelectorAll("textarea")[1];
-const respond = document.querySelector(".respond");
+let Textarea = document.querySelectorAll("textarea")[1];
+const Right_Response = document.querySelector(".respond");
 
 const search = document.querySelector("input");
 
 
 
 search.addEventListener("input", (event) => {
-    let searchQuery = event.target.value.toLowerCase();
-    let items = area.querySelectorAll("div");
+    let searchQuery = event.target.value.toLowerCase().trim();
+    let items = Left_container.querySelectorAll("div");
 
     if (searchQuery === "") {
         items.forEach(item => {
@@ -30,19 +30,15 @@ search.addEventListener("input", (event) => {
         return;
     }
 
+
     items.forEach(function (item) {
         let originalText = item.dataset.original || item.innerHTML;
         item.dataset.original = originalText; 
-        let itemName = item.textContent.toLowerCase();
+        let itemName = originalText.toLowerCase();
 
         if (itemName.includes(searchQuery)) {
-            const regex = new RegExp(`(${searchQuery})`, 'gi');
-            const highlightedText = originalText.replace(regex, (match, p1) => {
-                if (p1.toLowerCase() === searchQuery) {
-                    return `<span class="highlight" style="color: red;">${p1}</span>`;
-                }
-                return match;
-            });
+            const regex = new RegExp(`(${searchQuery})(?![^<>]*>)`, 'gi');
+            const highlightedText = originalText.replace(regex, '<span class="highlight" style="color: red;">$1</span>');
             item.innerHTML = highlightedText;
             item.style.display = "block";
         } else {
@@ -53,21 +49,18 @@ search.addEventListener("input", (event) => {
 });
 
 
-
-
-
 let originalid;
 let clonenode;
 let clonediv;
 
 
-btn2.addEventListener("click", ()=>{
+Question.addEventListener("click", ()=>{
     content.style.display = "block";
     response.style.display = "none";
 })
 
 
-btn3.addEventListener("click", ()=>{
+Resolve.addEventListener("click", ()=>{
    
    
     for(let key in mainobj){
@@ -85,8 +78,8 @@ btn3.addEventListener("click", ()=>{
         clonediv.remove();
     }
 
-    question.innerHTML = "";
-    respond.innerHTML = "";
+    Response_Question.innerHTML = "";
+    Right_Response.innerHTML = "";
     
 });
 
@@ -151,7 +144,7 @@ function updateTimeStamps() {
     localstore("key", mainobj);
 
     // Update the displayed timestamps
-    let items = area.querySelectorAll("div");
+    let items = Left_container.querySelectorAll("div");
     items.forEach(item => {
         let id = item.id;
         if (mainobj[id]) {
@@ -193,7 +186,7 @@ let creatediv = ()=>{
                 localstore("key",mainobj)
                 
                 let div = createsection(obj);
-                area.appendChild(div);
+                Left_container.appendChild(div);
 
                 
                 subject.value = "";
@@ -205,7 +198,7 @@ let creatediv = ()=>{
 }
 
 
-btn.addEventListener("click", creatediv);
+submit.addEventListener("click", creatediv);
 
 
 function localstore(key, mainobj){
@@ -218,7 +211,7 @@ window.onload = ()=>{
     if(item){ 
         for(let key in item){
             let div = createsection(item[key]);
-            area.append(div);
+            Left_container.append(div);
         }
     }
     search.value = "";
@@ -227,7 +220,7 @@ window.onload = ()=>{
 
 
 
-area.addEventListener("click", (event)=>{
+Left_container.addEventListener("click", (event)=>{
      clonediv = event.target.closest("div");
      
     if(clonediv){
@@ -237,12 +230,12 @@ area.addEventListener("click", (event)=>{
         originalid = clonediv.id;
         clonenode.setAttribute("id",originalid);
         
-        question.innerText = "";
-        question.appendChild(clonenode);
-        respond.innerHTML = "";
+        Response_Question.innerText = "";
+        Response_Question.appendChild(clonenode);
+        Right_Response.innerHTML = "";
         mainobj[originalid].arr.forEach((item)=>{
             let div = createsection2(item);
-            respond.appendChild(div);
+            Right_Response.appendChild(div);
         })
 
     }
@@ -283,17 +276,17 @@ function createsection2(obj){
 
 
 let creatediv2 = ()=>{
-    if(subject2.value!="" && text2.value != ""){
+    if(subject2.value!="" && Textarea.value != ""){
         subject2 = trimval(subject2);
 
-        text2 = trimval(text2);
+        Textarea = trimval(Textarea);
 
-        if(subject2.value!="" && text2.value!=""){
+        if(subject2.value!="" && Textarea.value!=""){
                 
 
                 let obj2 = {
                     sub : subject2.value,
-                    content: text2.value,
+                    content: Textarea.value,
                     like:  "Like",
                     dislike: "Dislike",
                     count: 0,
@@ -307,11 +300,11 @@ let creatediv2 = ()=>{
                
                 let div = createsection2(obj2);
                 
-                respond.appendChild(div);
+                Right_Response.appendChild(div);
 
                 
                 subject2.value = "";
-                text2.value = "";
+                Textarea.value = "";
                 
         }
         
@@ -321,7 +314,7 @@ let creatediv2 = ()=>{
 
 
 
-btn4.addEventListener("click", creatediv2);
+Response_Submit.addEventListener("click", creatediv2);
 
 response.addEventListener("click", (event)=>{
     
