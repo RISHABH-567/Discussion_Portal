@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: "Josefin Sans";
+    
 }
 
 .heading{
@@ -21,17 +22,19 @@
 
 .left{
     width: 50vw;
-    background-color: whitesmoke;
-    height: 92vh;
+    background-color: white;
+    /* height: 100vh; */
     border: 2px solid rgb(203, 193, 193);
     overflow: scroll;
     scrollbar-width: none;
+    border: 1px solid black;
 }
 
 .btn{
     display: flex;
     height: 12vmin;
-    background-color: white;
+    background-color: #E5FCF5;
+    border-bottom: 1px solid black;
 }
 
 .btn button{
@@ -48,12 +51,15 @@
     height: 4vmin;
     margin: 4vmin 0 0 1vmin;
     padding-left: 2vmin;
+    background-color: white;
+    border: 1px solid black;
 }
 
 .ans div{
      padding: 1em;
-     border: 1px solid rgb(203, 193, 193);
+     border: 1px solid black;
      height: 3em;
+     background-color: #E5FCF5;
 }
 
 .ans p:nth-of-type(1){
@@ -121,6 +127,10 @@
 .response{
     padding: 5vmin 8vmin;
     display: none;
+    background-color: white;
+    overflow: scroll;
+    height: 35vw;
+    scrollbar-width: none;
 }
 
 .response h4{
@@ -146,25 +156,33 @@
 .response input{
     margin-bottom: 0.1em;
     margin-top: 1em;
+    background-color: white;
+    color: #000;
+    border: 1px solid black;
 }
 
 .response textarea{
     height: 4em;
     margin-bottom: 1em;
     width: 35em;
+    background-color: white;
+    color: #000;
+    border: 1px solid black;
 }
 
 .question{
-    background-color: whitesmoke;
+    background-color: #E5FCF5;
     padding: 1em 0em 1em 2em;
     width: 35em;
+    border: 1px solid black;
 }
 
 .respond{
-    background-color: whitesmoke;
+    background-color: #E5FCF5;
     padding: 1em 0em 0em 2em;
     width: 35em;
     margin-bottom: 1em;
+    border: 1px solid black;
 }
 
 #like{

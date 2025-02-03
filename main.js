@@ -1,22 +1,21 @@
 let subject = document.querySelectorAll("input")[1];
 let text = document.querySelector("textarea");
-const submit = document.querySelectorAll("button")[1];  //submit
+const submit = document.querySelectorAll("button")[1];  //Submit
 const Left_container = document.querySelector(".ans");
-const Question = document.querySelector("button");     //question
+const Question = document.querySelector("button");     //Question
 const response = document.querySelector(".response");
 const content = document.querySelector(".content");
 const Response_Question = document.querySelector(".question");
-const Resolve = document.querySelectorAll("button")[2];     //resolve
+const Resolve = document.querySelectorAll("button")[2];     //Resolve
 let mainobj = JSON.parse(localStorage.getItem("key")) || {};
 const Response_Submit = document.querySelectorAll("button")[3];  //Submit 2
-let subject2 = document.querySelectorAll("input")[2];
+let Name = document.querySelectorAll("input")[2];
 let Textarea = document.querySelectorAll("textarea")[1];
 const Right_Response = document.querySelector(".respond");
-
 const search = document.querySelector("input");
 
 
-
+//Search functionality including highlighting the text...
 search.addEventListener("input", (event) => {
     let searchQuery = event.target.value.toLowerCase().trim();
     let items = Left_container.querySelectorAll("div");
@@ -49,17 +48,20 @@ search.addEventListener("input", (event) => {
 });
 
 
-let originalid;
-let clonenode;
-let clonediv;
+let originalid;     //Original id of div in left container
+let clonenode;      //Clone div made from left container div
+let clonediv;      //Original div from which clone div is made
 
 
+//For Question button to appear question on right side of document...
 Question.addEventListener("click", ()=>{
     content.style.display = "block";
     response.style.display = "none";
 })
 
 
+
+//For deleting div in left container...
 Resolve.addEventListener("click", ()=>{
    
    
@@ -85,13 +87,15 @@ Resolve.addEventListener("click", ()=>{
 
 
 
-//Triming the value
+//Triming the value...
 const trimval = (val)=>{
     val.value = val.value.trim();
     return val;
 }
 
 
+
+//Creating the div for left container using submit button of questions section...
 function createsection(obj){
     let div = document.createElement("div");
     div.id = obj.id;
@@ -119,7 +123,7 @@ function createsection(obj){
 }
 
 
-
+//For Timestamp by calculating date.now and div's id...
 function updateTimeStamps() {
     let now = Date.now();
 
@@ -137,28 +141,20 @@ function updateTimeStamps() {
             obj.timeStamp = `${Math.floor(diff / 86400)} days ago`;
         }
         
-        mainobj[key] = obj;
+        let items = Left_container.querySelectorAll("div");
+        items.forEach(item => {
+                let span = item.querySelectorAll("p")[1];
+                span.innerText = obj.timeStamp;
+        });
     }
-
-    
-    localstore("key", mainobj);
-
-    // Update the displayed timestamps
-    let items = Left_container.querySelectorAll("div");
-    items.forEach(item => {
-        let id = item.id;
-        if (mainobj[id]) {
-            let span = item.querySelectorAll("p")[1];
-            span.innerText = mainobj[id].timeStamp;
-        }
-    });
 }
+
 
 
 setInterval(updateTimeStamps, 1000);
 
 
-
+//Creating the object for left container...
 let creatediv = ()=>{
     if(subject.value!="" && text.value != ""){
         subject = trimval(subject);
@@ -172,7 +168,7 @@ let creatediv = ()=>{
                     id : Date.now(),
                     sub : subject.value,
                     content: text.value,
-                    timeStamp: "Just Now",
+                    timeStamp: "",
                     arr: []   
                 };
 
@@ -198,14 +194,18 @@ let creatediv = ()=>{
 }
 
 
+//For creating the div on the left container on clicking the submit button on question section...
 submit.addEventListener("click", creatediv);
 
 
+//Storing the data in local storage...
 function localstore(key, mainobj){
     localStorage.setItem(key, JSON.stringify(mainobj));
 }
 
 
+
+//Function invoke on loading the button...
 window.onload = ()=>{
     let item = JSON.parse(localStorage.getItem("key"));
     if(item){ 
@@ -219,7 +219,7 @@ window.onload = ()=>{
 }
 
 
-
+//For making the clone of div in left container and append it in the response section...
 Left_container.addEventListener("click", (event)=>{
      clonediv = event.target.closest("div");
      
@@ -243,7 +243,7 @@ Left_container.addEventListener("click", (event)=>{
 
 
 
-
+// Creating div for the right section in response side...
 function createsection2(obj){
     let div = document.createElement("div");
     div.id = obj.id;
@@ -275,17 +275,18 @@ function createsection2(obj){
 }
 
 
+// Creating the object of the response section and pushing the object in the array of main object...
 let creatediv2 = ()=>{
-    if(subject2.value!="" && Textarea.value != ""){
-        subject2 = trimval(subject2);
+    if(Name.value!="" && Textarea.value != ""){
+        Name = trimval(Name);
 
         Textarea = trimval(Textarea);
 
-        if(subject2.value!="" && Textarea.value!=""){
+        if(Name.value!="" && Textarea.value!=""){
                 
 
                 let obj2 = {
-                    sub : subject2.value,
+                    sub : Name.value,
                     content: Textarea.value,
                     like:  "Like",
                     dislike: "Dislike",
@@ -303,7 +304,7 @@ let creatediv2 = ()=>{
                 Right_Response.appendChild(div);
 
                 
-                subject2.value = "";
+                Name.value = "";
                 Textarea.value = "";
                 
         }
@@ -313,9 +314,12 @@ let creatediv2 = ()=>{
 
 
 
-
+//Creating the response section on clicking the submit button of response side...
 Response_Submit.addEventListener("click", creatediv2);
 
+
+
+// For counting the like and dislike and storing them in the local storage...
 response.addEventListener("click", (event)=>{
     
     if(event.target.id == "like"){
@@ -333,6 +337,7 @@ response.addEventListener("click", (event)=>{
                 
               
         localstore("key",mainobj);  
+
         
      }
     else if(event.target.id == "dislike"){
@@ -351,10 +356,77 @@ response.addEventListener("click", (event)=>{
               
         localstore("key",mainobj); 
     }
+  
 
 })
 
-// ` 
 
 
- 
+response.addEventListener("click", (event)=>{
+    let  id = event.target.closest("div").id;
+    let currentdiv = event.target.closest("div");
+    let prevdiv = currentdiv.previousElementSibling;
+    let nextdiv = currentdiv.nextElementSibling;
+
+    if(event.target.id == "like" || event.target.id == "dislike"){  
+
+
+    let idx = mainobj[originalid].arr.findIndex(item => item.id == id);
+
+    let count = mainobj[originalid].arr[idx].count;
+
+
+    let dis_count = mainobj[originalid].arr[idx].dis_count;
+
+    
+    let diff = count-dis_count;
+   
+    
+    
+    while(nextdiv){
+        
+          let id1 = mainobj[originalid].arr.findIndex(item=> item.id == nextdiv.id);
+        
+        
+        let nextitemlike = mainobj[originalid].arr[id1].count;
+        let nextitemdislike = mainobj[originalid].arr[id1].dis_count;
+        let nextitemcount = nextitemlike - nextitemdislike;
+     
+        if(diff<nextitemcount){
+            Right_Response.insertBefore(currentdiv, nextdiv.nextElementSibling);
+            nextdiv = currentdiv.nextElementSibling;
+            
+        }else{
+            break;
+        }
+
+    }
+    while(prevdiv){
+        
+        let id1 = mainobj[originalid].arr.findIndex(item=> item.id == prevdiv.id);
+        
+        let nextitemlike = mainobj[originalid].arr[id1].count;
+        
+        let nextitemdislike = mainobj[originalid].arr[id1].dis_count;
+        let nextitemcount = nextitemlike - nextitemdislike;
+        if(diff>nextitemcount){
+            Right_Response.insertBefore(currentdiv, prevdiv.previousElementSibling);
+            prevdiv = currentdiv.previousElementSibling;
+            
+        }else{
+            break;
+        }
+        
+    }
+
+    let updatedArr = Array.from(Right_Response.children).map(div => {
+        return mainobj[originalid].arr.find(item => item.id == div.id);
+    });
+
+    
+    mainobj[originalid].arr = updatedArr;
+
+    
+    localstore("key", mainobj);
+    }
+})
