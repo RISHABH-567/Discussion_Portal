@@ -320,113 +320,72 @@ Response_Submit.addEventListener("click", creatediv2);
 
 
 // For counting the like and dislike and storing them in the local storage...
-response.addEventListener("click", (event)=>{
-    
-    if(event.target.id == "like"){
-        let button = event.target.closest("button");
 
+response.addEventListener("click", (event) => {
+    
+    if (event.target.id == "like" || event.target.id == "dislike") {
+        let button = event.target.closest("button");
         let id = event.target.closest("div").id;
-        
+
+      
         let responseIndex = mainobj[originalid].arr.findIndex(item => item.id == id);
 
-         let count = mainobj[originalid].arr[responseIndex].count;
-    
-        button.innerText = `Like ${++count}`;
-    
+        
+        if (event.target.id == "like") {
+            let count = mainobj[originalid].arr[responseIndex].count;
+            button.innerText = `Like ${++count}`;
             mainobj[originalid].arr[responseIndex].count = count;
-                
-              
-        localstore("key",mainobj);  
-
-        
-     }
-    else if(event.target.id == "dislike"){
-        let button = event.target.closest("button");
-
-        let id = event.target.closest("div").id;
-        
-        let responseIndex = mainobj[originalid].arr.findIndex(item => item.id == id);
-
-         let count = mainobj[originalid].arr[responseIndex].dis_count;
-    
-        button.innerText = `Dislike ${++count}`;
-    
-            mainobj[originalid].arr[responseIndex].dis_count = count;
-                
-              
-        localstore("key",mainobj); 
-    }
-  
-
-})
-
-
-
-response.addEventListener("click", (event)=>{
-    let  id = event.target.closest("div").id;
-    let currentdiv = event.target.closest("div");
-    let prevdiv = currentdiv.previousElementSibling;
-    let nextdiv = currentdiv.nextElementSibling;
-
-    if(event.target.id == "like" || event.target.id == "dislike"){  
-
-
-    let idx = mainobj[originalid].arr.findIndex(item => item.id == id);
-
-    let count = mainobj[originalid].arr[idx].count;
-
-
-    let dis_count = mainobj[originalid].arr[idx].dis_count;
-
-    
-    let diff = count-dis_count;
-   
-    
-    
-    while(nextdiv){
-        
-          let id1 = mainobj[originalid].arr.findIndex(item=> item.id == nextdiv.id);
-        
-        
-        let nextitemlike = mainobj[originalid].arr[id1].count;
-        let nextitemdislike = mainobj[originalid].arr[id1].dis_count;
-        let nextitemcount = nextitemlike - nextitemdislike;
-     
-        if(diff<nextitemcount){
-            Right_Response.insertBefore(currentdiv, nextdiv.nextElementSibling);
-            nextdiv = currentdiv.nextElementSibling;
-            
-        }else{
-            break;
+        } else if (event.target.id == "dislike") {
+            let dis_count = mainobj[originalid].arr[responseIndex].dis_count;
+            button.innerText = `Dislike ${++dis_count}`;
+            mainobj[originalid].arr[responseIndex].dis_count = dis_count;
         }
 
-    }
-    while(prevdiv){
-        
-        let id1 = mainobj[originalid].arr.findIndex(item=> item.id == prevdiv.id);
-        
-        let nextitemlike = mainobj[originalid].arr[id1].count;
-        
-        let nextitemdislike = mainobj[originalid].arr[id1].dis_count;
-        let nextitemcount = nextitemlike - nextitemdislike;
-        if(diff>nextitemcount){
-            Right_Response.insertBefore(currentdiv, prevdiv.previousElementSibling);
-            prevdiv = currentdiv.previousElementSibling;
-            
-        }else{
-            break;
+        let count = mainobj[originalid].arr[responseIndex].count;
+        let dis_count = mainobj[originalid].arr[responseIndex].dis_count;
+        let diff = count - dis_count;
+
+        let currentdiv = event.target.closest("div");
+        let prevdiv = currentdiv.previousElementSibling;
+        let nextdiv = currentdiv.nextElementSibling;
+
+
+        while (nextdiv) {
+            let id1 = mainobj[originalid].arr.findIndex(item => item.id == nextdiv.id);
+            let nextitemlike = mainobj[originalid].arr[id1].count;
+            let nextitemdislike = mainobj[originalid].arr[id1].dis_count;
+            let nextitemcount = nextitemlike - nextitemdislike;
+
+            if (diff < nextitemcount) {
+                Right_Response.insertBefore(currentdiv, nextdiv.nextElementSibling);  
+                nextdiv = currentdiv.nextElementSibling;  
+            } else {
+                break;  
+            }
         }
+
+      
+        while (prevdiv) {
+            let id1 = mainobj[originalid].arr.findIndex(item => item.id == prevdiv.id);
+            let nextitemlike = mainobj[originalid].arr[id1].count;
+            let nextitemdislike = mainobj[originalid].arr[id1].dis_count;
+            let nextitemcount = nextitemlike - nextitemdislike;
+
+            if (diff > nextitemcount) {
+                Right_Response.insertBefore(currentdiv, prevdiv);  
+                prevdiv = currentdiv.previousElementSibling;  
+            } else {
+                break;  
+            }
+        }
+
         
+        let updatedArr = Array.from(Right_Response.children).map(div => {
+            return mainobj[originalid].arr.find(item => item.id == div.id);
+        });
+
+        mainobj[originalid].arr = updatedArr;
+
+        localstore("key", mainobj);
     }
-
-    let updatedArr = Array.from(Right_Response.children).map(div => {
-        return mainobj[originalid].arr.find(item => item.id == div.id);
-    });
-
-    
-    mainobj[originalid].arr = updatedArr;
-
-    
-    localstore("key", mainobj);
-    }
-})
+});
